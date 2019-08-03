@@ -803,6 +803,10 @@ select:active {
   margin: 0px;
   padding: 0px;
 }
+.noVNC_hidden {
+  display: none;
+}
+
 
 /* ----------------------------------------
  * Main Area
