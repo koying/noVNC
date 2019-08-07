@@ -438,7 +438,7 @@ const UI = {
         }
 
         // State change closes the password dialog
-        document.getElementById('noVNC_password_dlg')
+        document.getElementById('noVNC_credentials_dlg')
             .classList.remove('noVNC_open');
     },
 
@@ -1152,22 +1152,22 @@ const UI = {
         document.getElementById("noVNC_username_block").classList.remove("noVNC_hidden");
         document.getElementById("noVNC_password_block").classList.remove("noVNC_hidden");
 
-        let inpFocus = "none";
+        let inputFocus = "none";
         if (!e.detail.types.includes("username")) {
             document.getElementById("noVNC_username_block").classList.add("noVNC_hidden");
         } else {
-            inpFocus = inpFocus === "none" ? "noVNC_username_input" : inpFocus;
+            inputFocus = inputFocus === "none" ? "noVNC_username_input" : inputFocus;
         }
         if (!e.detail.types.includes("password")) {
             document.getElementById("noVNC_password_block").classList.add("noVNC_hidden");
         } else {
-            inpFocus = inpFocus === "none" ? "noVNC_password_input" : inpFocus;
+            inputFocus = inputFocus === "none" ? "noVNC_password_input" : inputFocus;
         }
-        document.getElementById('noVNC_password_dlg')
+        document.getElementById('noVNC_credentials_dlg')
             .classList.add('noVNC_open');
 
         setTimeout(() => document
-            .getElementById(inpFocus).focus(), 100);
+            .getElementById(inputFocus).focus(), 100);
 
         Log.Warn("Server asked for credentials");
         UI.showStatus(_("Credentials are required"), "warning");
@@ -1177,18 +1177,17 @@ const UI = {
         // Prevent actually submitting the form
         e.preventDefault();
 
-        let inputElem = document.getElementById('noVNC_username_input');
-        const username = inputElem.value;
+        let inputElemUsername = document.getElementById('noVNC_username_input');
+        const username = inputElemUsername.value;
 
-        inputElem = document.getElementById('noVNC_password_input');
-        const password = inputElem.value;
+        let inputElemPassword = document.getElementById('noVNC_password_input');
+        const password = inputElemPassword.value;
         // Clear the input after reading the password
-        inputElem.value = "";
-
+        inputElemPassword.value = "";
 
         UI.rfb.sendCredentials({ username: username, password: password });
         UI.reconnect_password = password;
-        document.getElementById('noVNC_password_dlg')
+        document.getElementById('noVNC_credentials_dlg')
             .classList.remove('noVNC_open');
     },
 
